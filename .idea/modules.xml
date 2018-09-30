@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SMASAuto.iml" filepath="$PROJECT_DIR$/.idea/modules/SMASAuto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SMASAuto_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SMASAuto_main.iml" group="SMASAuto" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SMASAuto_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SMASAuto_test.iml" group="SMASAuto" />
+    </modules>
+  </component>
+</project>
