@@ -25,10 +25,8 @@ public class MainRunnable {
 
 	private static void smasEduSite() {
 		SLoginDTO loginDto = new SLoginDTO("hni_btlm_thcs_xuandinh", "123456aA@");
-		List<STheNapDTO> theNapListDto = new ArrayList<>();
-		theNapListDto.add(new STheNapDTO("011355919425192","10000146930586"));
-		theNapListDto.add(new STheNapDTO("215292293315469","10000145943699"));
-		theNapListDto.add(new STheNapDTO("114551999097922","10000146332916"));
+		List<STheNapDTO> theNapListDto = new ArrayList<>(); 
+		theNapListDto.add(new STheNapDTO("911433261313564","10000146004422"));
 		SmassAuto smasAuto = new SmassAuto(loginDto, theNapListDto);
 		smasAuto.execute();
 	}

@@ -39,14 +39,8 @@ public class SmasNapTheProcessor {
 		long startTime = System.nanoTime();
 
 		try {
-			int countRetry = 0;
-			while (true) {
-				countRetry = countRetry + 1;
-				System.out.println("----retry lần: " + countRetry);
-				if (countRetry > 5) {
-					System.out.println("----QUIT: retry quá 5 lần");
-					break;
-				}
+			for (int i = 1; i <= 5; i++) {
+				System.out.println("----retry lần: " + i);
 
 				driver.get("https://smas.edu.vn/SMSEDUArea/Topup");
 				System.out.println("----url: " + driver.getCurrentUrl());
@@ -85,29 +79,51 @@ public class SmasNapTheProcessor {
 				cardSerialEl.sendKeys(sTheNapDTO.getSerial());
 				confirmationCodeEl.sendKeys(captchaText);
 				formEl.submit();
-
-				// capture screen
-				contentEl = driver.findElement(By.id("content"));
-				((JavascriptExecutor) driver).executeScript("arguments[0].style.display = 'block';", contentEl);
-				File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				String fileDoneImage = getPathFileResult(sTheNapDTO.getMathe());
-				FileUtils.copyFile(screenshot, new File(fileDoneImage));
+				
+				 // capture screen (bỏ)
+				 contentEl = driver.findElement(By.id("content"));
+				 ((JavascriptExecutor) driver).executeScript("arguments[0].style.display ='block';", contentEl);
+				 File screenshot = ((TakesScreenshot)
+				 driver).getScreenshotAs(OutputType.FILE);
+				 String fileDoneImage = getPathFileResult(sTheNapDTO.getMathe());
+				 FileUtils.copyFile(screenshot, new File(fileDoneImage));
 
 				long endTime = System.nanoTime();
 				long duration = (endTime - startTime);
 				double seconds = (double) duration / 1000000000.0;
 				System.out.println("----thời gian: " + Math.round(seconds) + "s");
 
-				WebElement errorEl = driver.findElement(By.className("message-of-error"));
-				if (errorEl != null && StringUtils.isNotEmpty(errorEl.getText())) {
-					return "RESULT: " + errorEl.getText();
-				} 
+				try {
+					WebElement successEl = driver.findElement(By.className("message-of-success"));
+					if(successEl != null) {
+						 ((JavascriptExecutor) driver).executeScript("arguments[0].style.display ='block';", successEl);
+						 if (StringUtils.isNotEmpty(successEl.getText())) {
+							return "RESULT: " + successEl.getText();
+						}
+					} 
+	
+					WebElement errorEl = driver.findElement(By.className("message-of-error"));
+					if(errorEl != null) {
+						((JavascriptExecutor) driver).executeScript("arguments[0].style.display ='block';", errorEl);
+						if (StringUtils.isNotEmpty(errorEl.getText())) {
+							return "RESULT: " + errorEl.getText();
+						}
+					}
+					
+					System.out.println("----Submit failed!");
+	
+					if (i == 5) {
+						return "RESULT: FAILED-Retry quá 5 lần";
+					}
+				}catch(Exception e) {
+					
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("TIME OUT");
+			return "RESULT: EXCEPTION TIMEOUT";
 		}
-		return "RESULT: SUCCESS";
+		return "RESULT: FAILED";
 	}
 
 	private String captureCaptcha(String mathe, WebDriver driver) throws IOException {
@@ -176,7 +192,7 @@ public class SmasNapTheProcessor {
 		String destFile = folder + fileName;
 		return destFile;
 	}
- 
+
 	public WebDriver getDriver() {
 		return driver;
 	}

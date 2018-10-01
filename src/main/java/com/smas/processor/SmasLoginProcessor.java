@@ -61,8 +61,10 @@ public class SmasLoginProcessor {
 
 				// click cap 1
 				WebElement formEl = driver.findElement(By.tagName("form"));
+				WebElement rdbSelectLevelEl = driver.findElement(By.id("RdbSelectLevel"));
+
 				JavascriptExecutor jse = (JavascriptExecutor)driver;
-				jse.executeScript("document.getElementById('RdbSelectLevel').setAttribute('value', '1');");
+				jse.executeScript("arguments[0].setAttribute('value', '1');", rdbSelectLevelEl);
 				
 				formEl.submit(); 
 				
