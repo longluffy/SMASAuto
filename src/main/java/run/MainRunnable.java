@@ -20,15 +20,28 @@ public class MainRunnable {
 	
 
 	public static void main(String[] args) {
-		smasEduSite(); 
+		
+		//Mã: 513977022024379  10000146337516
+		//Mã: 115181618587922  10000145923782
+//		Mã: 311195210790305  10000145947343
+		String res = smasEduSite("hni_btlm_thcs_xuandinh", "123456aA@","311195210790305","10000145947343"); 
+		System.out.println("request result = "+res);
 	}
 
-	private static void smasEduSite() {
-		SLoginDTO loginDto = new SLoginDTO("hni_btlm_thcs_xuandinh", "123456aA@");
+	private static String smasEduSite(String username, String password, String pin, String serial) {
+		SLoginDTO loginDto = new SLoginDTO(username, password);
 		List<STheNapDTO> theNapListDto = new ArrayList<>(); 
-		theNapListDto.add(new STheNapDTO("911433261313564","10000146004422"));
+		//Mã: 119652619535309  10000145929445
+//		Mã: 919085973615832  10000145945895
+//		Mã: 210723429493684  10000147004927
+		//Mã: 310247341484229  10000145920053
+//Mã: 517797941334399  10000146332858
+		//Mã: 512121685167242  10000147631199
+//		Mã: 513089963137498  10000147409501
+		//Mã: 513089963137498  10000147409501
+		theNapListDto.add(new STheNapDTO(pin,serial));
 		SmassAuto smasAuto = new SmassAuto(loginDto, theNapListDto);
-		smasAuto.execute();
+		return smasAuto.execute();
 	}
  
 	@SuppressWarnings("unused")

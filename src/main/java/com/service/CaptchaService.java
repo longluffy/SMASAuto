@@ -7,6 +7,8 @@ import com.DeathByCaptcha.Captcha;
 import com.DeathByCaptcha.Client;
 import com.DeathByCaptcha.Exception;
 import com.DeathByCaptcha.HttpClient;
+import com.anti_captcha.Api.ImageToText;
+import com.anti_captcha.Helper.DebugHelper;
 
 public class CaptchaService {
 
@@ -77,4 +79,29 @@ public class CaptchaService {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	 public static String exampleImageToText(String fileLocal) throws InterruptedException {
+	        DebugHelper.setVerboseMode(true);
+
+	        ImageToText api = new ImageToText();
+	        api.setClientKey("f3c81b92da029d82cb3badcff1f3b182");
+	        api.setFilePath(fileLocal);
+
+	        if (!api.createTask()) {
+	            DebugHelper.out(
+	                    "API v2 send failed. " + api.getErrorMessage(),
+	                    DebugHelper.Type.ERROR
+	            );
+	        } else if (!api.waitForResult()) {
+	            DebugHelper.out("Could not solve the captcha.", DebugHelper.Type.ERROR);
+	        } else {
+	            DebugHelper.out("Result: " + api.getTaskSolution().getText(), DebugHelper.Type.SUCCESS);
+	            return api.getTaskSolution().getText();
+	        }
+			return null;
+	        
+	    }
+
 }

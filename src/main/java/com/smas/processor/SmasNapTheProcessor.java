@@ -61,8 +61,8 @@ public class SmasNapTheProcessor {
 
 				// get captcha
 				String fileImage = captureCaptcha(sTheNapDTO.getMathe(), driver);
-				String captchaText = getCaptchaText(fileImage);
-
+//				String captchaText = getCaptchaText(fileImage);
+				String captchaText = CaptchaService.exampleImageToText(fileImage);
 				if (StringUtils.isEmpty(captchaText)) {
 					System.out.println("----captcha empty");
 					continue;

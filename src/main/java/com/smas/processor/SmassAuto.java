@@ -27,6 +27,7 @@ public class SmassAuto {
 		try {
 
 			System.out.println("----BẮT ĐẦU-----");
+			long startTime = System.nanoTime();
 
 			driver = PageUtils.initInstant();
 
@@ -61,21 +62,21 @@ public class SmassAuto {
 
 			// for the nap
 			System.out.println("2. NẠP THẺ");
+			String message = "";
 			for (STheNapDTO dto : thenapListDto) {
 				System.out.println("--THẺ: " + dto.getMathe());
 				SmasNapTheProcessor naptheProcessor = new SmasNapTheProcessor(driver, dto, hasVisitedLogin);
-				String message = naptheProcessor.execute();
+				message = naptheProcessor.execute();
 				System.out.println(message);
 			}
 
-			long startTime = System.nanoTime();
 			long endTime = System.nanoTime();
 			long duration = (endTime - startTime);
 			double seconds = (double) duration / 1000000000.0;
 
 			System.out.println("TỔNG: " + Math.round(seconds) + "s");
 			driver.quit();
-			return "";
+			return message;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("INTERNAL SERVER ERROR");
